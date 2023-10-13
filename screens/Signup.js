@@ -348,5 +348,4 @@ const Signup = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
 export default Signup;
