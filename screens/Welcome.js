@@ -19,7 +19,7 @@ const Welcome = ({ navigation }) => {
           width: 300,
           borderRadius: 20,
           position: "absolute",
-          top: 110,
+          top: 50,
           left: 50,
           alignItems: "center",
         }}
@@ -37,49 +37,43 @@ const Welcome = ({ navigation }) => {
       >
         <Text
           style={{
-            fontSize: 50,
+            fontSize: 40,
             fontWeight: 800,
-            color: COLORS.white,
+            color: COLORS.black,
           }}
         >
-          Let's Get
+          Unlcok Seamless Travel with
         </Text>
         <Text
           style={{
             fontSize: 46,
             fontWeight: 800,
-            color: COLORS.white,
+            color: COLORS.black,
           }}
         >
-          Started
+          QBus!
         </Text>
 
         <View style={{ marginVertical: 22 }}>
           <Text
             style={{
               fontSize: 16,
-              color: COLORS.white,
+              color: COLORS.black,
+              fontWeight: "700",
               marginVertical: 4,
             }}
           >
-            Connect with each other with chatting
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: COLORS.white,
-            }}
-          >
-            Calling, Enjoy Safe and private texting
+            Scan, Pay, Ride - It's That Easy.
           </Text>
         </View>
 
         <Button
-          title="Join Now"
+          title="Sign Up"
           onPress={() => navigation.navigate("Signup")}
           style={{
             marginTop: 22,
             width: "100%",
+            fontWeight: "bold",
           }}
         />
 
