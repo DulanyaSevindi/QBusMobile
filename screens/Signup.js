@@ -12,10 +12,34 @@ import COLORS from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
+import axios from "axios";
 
 const Signup = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [mobile, setMobile] = useState("");
+
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.1.2:4000/api/user/signup",
+        {
+          email,
+          password,
+          confirmpassword,
+          mobile,
+        }
+      );
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
@@ -62,6 +86,8 @@ const Signup = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
             />
           </View>
         </View>
@@ -109,6 +135,8 @@ const Signup = ({ navigation }) => {
               style={{
                 width: "80%",
               }}
+              value={mobile}
+              onChangeText={(text) => setMobile(text)}
             />
           </View>
         </View>
@@ -143,6 +171,8 @@ const Signup = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
             />
 
             <TouchableOpacity
@@ -191,6 +221,8 @@ const Signup = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={confirmpassword}
+              onChangeText={(text) => setConfirmPassword(text)}
             />
 
             <TouchableOpacity
@@ -232,6 +264,7 @@ const Signup = ({ navigation }) => {
             marginTop: 18,
             marginBottom: 4,
           }}
+          onPress={handleSignup}
         />
 
         <View
