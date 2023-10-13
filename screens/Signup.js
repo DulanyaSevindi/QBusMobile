@@ -30,15 +30,6 @@ const Signup = ({ navigation }) => {
           >
             Create Account
           </Text>
-
-          <Text
-            style={{
-              fontSize: 16,
-              color: COLORS.black,
-            }}
-          >
-            Connect with your friend today!
-          </Text>
         </View>
 
         <View style={{ marginBottom: 12 }}>
@@ -100,7 +91,7 @@ const Signup = ({ navigation }) => {
             }}
           >
             <TextInput
-              placeholder="+91"
+              placeholder="+94"
               placeholderTextColor={COLORS.black}
               keyboardType="numeric"
               style={{
@@ -170,6 +161,54 @@ const Signup = ({ navigation }) => {
           </View>
         </View>
 
+        <View style={{ marginBottom: 12 }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 400,
+              marginVertical: 8,
+            }}
+          >
+            Confirm Password
+          </Text>
+
+          <View
+            style={{
+              width: "100%",
+              height: 48,
+              borderColor: COLORS.black,
+              borderWidth: 1,
+              borderRadius: 8,
+              alignItems: "center",
+              justifyContent: "center",
+              paddingLeft: 22,
+            }}
+          >
+            <TextInput
+              placeholder="Re-enter your password"
+              placeholderTextColor={COLORS.black}
+              secureTextEntry={isPasswordShown}
+              style={{
+                width: "100%",
+              }}
+            />
+
+            <TouchableOpacity
+              onPress={() => setIsPasswordShown(!isPasswordShown)}
+              style={{
+                position: "absolute",
+                right: 12,
+              }}
+            >
+              {isPasswordShown == true ? (
+                <Ionicons name="eye-off" size={24} color={COLORS.black} />
+              ) : (
+                <Ionicons name="eye" size={24} color={COLORS.black} />
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View
           style={{
             flexDirection: "row",
@@ -183,7 +222,7 @@ const Signup = ({ navigation }) => {
             color={isChecked ? COLORS.primary : undefined}
           />
 
-          <Text>I aggree to the terms and conditions</Text>
+          <Text>I accept the terms and conditions</Text>
         </View>
 
         <Button
@@ -309,5 +348,4 @@ const Signup = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
 export default Signup;
