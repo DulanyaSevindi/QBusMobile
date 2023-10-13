@@ -133,6 +133,7 @@ const Login = ({ navigation }) => {
 
         <Button
           title="Login"
+          onPress={() => navigation.navigate("SelectionAcc")}
           filled
           style={{
             marginTop: 18,
