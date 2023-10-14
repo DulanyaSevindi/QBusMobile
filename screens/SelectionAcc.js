@@ -53,6 +53,8 @@ const SelectionAcc = ({ navigation }) => {
           }}
         >
           <Button
+            onPress={HandleSelection}
+            filled
             title="Local Passenger"
             style={{
               marginTop: 60,
