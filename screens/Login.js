@@ -41,6 +41,9 @@ const Login = ({ navigation }) => {
       }
     } catch (err) {
       console.error("Login failed:", err);
+      if (err.response && err.response.status === 400) {
+        console.error(err.response.data.error);
+      }
     }
   };
 
