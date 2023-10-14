@@ -4,7 +4,7 @@ const COLORS = {
   primary: "#1d4ed8",
   secondary: "#ffffff",
   grey: "#CCCCCC",
-  blue: "#d7e7f3",
+  blue: "#003399",
 };
 
 export default COLORS;
