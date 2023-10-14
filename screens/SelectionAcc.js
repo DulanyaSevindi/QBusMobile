@@ -57,6 +57,7 @@ const SelectionAcc = ({ navigation }) => {
               fontWeight: "bold",
               left: 40,
             }}
+            onPress={() => navigation.navigate("Account")}
           />
 
           <Button
