@@ -1,7 +1,7 @@
 import React from "react";
-import InfoScreen from "../navigation/InfoScreen";
-import TopupScreen from "../navigation/TopupScreen";
-import TicketScreen from "../navigation/TicketScreen";
+import InfoScreen from "../Navigation/InfoScreen";
+import TopupScreen from "../Navigation/TopupScreen";
+import TicketScreen from "../Navigation/TicketScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
