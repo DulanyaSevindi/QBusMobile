@@ -5,6 +5,7 @@ import COLORS from "../constants/colors";
 import Button from "../components/Button";
 
 const SelectionAcc = ({ navigation }) => {
+  const HandleSelection = () => {};
   return (
     <LinearGradient
       style={{
@@ -50,6 +51,8 @@ const SelectionAcc = ({ navigation }) => {
           }}
         >
           <Button
+            onPress={HandleSelection}
+            filled
             title="Local Passenger"
             style={{
               marginTop: 60,
