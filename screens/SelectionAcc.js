@@ -53,6 +53,7 @@ const SelectionAcc = ({ navigation }) => {
           }}
         >
           <Button
+            filled
             title="Local Passenger"
             style={{
               marginTop: 60,
@@ -71,6 +72,7 @@ const SelectionAcc = ({ navigation }) => {
               fontWeight: "bold",
               left: 40,
             }}
+            onPress={() => navigation.navigate("TicketScreen")}
           />
         </View>
       </View>
