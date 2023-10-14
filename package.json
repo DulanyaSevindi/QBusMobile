@@ -9,7 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-navigation/native": "^6.1.6",
+    "@react-native-picker/picker": "^2.5.1",
+    "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.12",
     "expo": "~48.0.15",
     "expo-checkbox": "~2.3.1",
