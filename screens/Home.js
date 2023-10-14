@@ -4,10 +4,13 @@ import TopupScreen from "../Navigation/TopupScreen";
 import TicketScreen from "../Navigation/TicketScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomePage() {
+  const route = useRoute();
+  const id = route.params?.id;
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -27,6 +30,7 @@ export default function HomePage() {
       <Tab.Screen
         name="Topup"
         component={TopupScreen}
+        initialParams={{ id }}
         options={{
           title: "Topup",
           tabBarIcon: ({ size, color }) => (
