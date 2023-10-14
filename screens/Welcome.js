@@ -68,7 +68,7 @@ const Welcome = ({ navigation }) => {
         </View>
 
         <Button
-          title="Sign Up"
+          title="Sign up"
           onPress={() => navigation.navigate("Signup")}
           style={{
             marginTop: 22,
