@@ -12,10 +12,33 @@ import COLORS from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
+import axios from "axios";
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        `http://192.168.1.2:4000/api/user/login`,
+        {
+          email,
+          password,
+        }
+      );
+      if (response.status === 200) {
+        navigation.navigate("SelectionAcc");
+      } else {
+        console.error(response.data.error);
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -63,6 +86,8 @@ const Login = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
             />
           </View>
         </View>
@@ -97,6 +122,8 @@ const Login = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
             />
 
             <TouchableOpacity
@@ -133,7 +160,7 @@ const Login = ({ navigation }) => {
 
         <Button
           title="Login"
-          onPress={() => navigation.navigate("SelectionAcc")}
+          onPress={handleLogin}
           filled
           style={{
             marginTop: 18,
