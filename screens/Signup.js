@@ -26,7 +26,7 @@ const Signup = ({ navigation }) => {
   const handleSignup = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.2:4000/api/user/signup",
+        "http://192.168.1.5:4000/api/user/signup",
         {
           email,
           password,
@@ -37,6 +37,9 @@ const Signup = ({ navigation }) => {
       navigation.navigate("Login");
     } catch (error) {
       console.error("Signup failed:", error);
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.error);
+      }
     }
   };
 
