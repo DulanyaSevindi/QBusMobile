@@ -1,6 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Signup, Welcome, Account, SelectionAcc } from "./screens";
+import {
+  Login,
+  Signup,
+  Welcome,
+  Account,
+  SelectionAcc,
+  HomePage,
+} from "./screens";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 
@@ -14,6 +21,13 @@ export default function App() {
         <Stack.Screen
           name="Welcome"
           component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
           options={{
             headerShown: false,
           }}
@@ -48,7 +62,7 @@ export default function App() {
         />
       </Stack.Navigator>
 
-      <Tab.Navigator
+      {/* <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
@@ -86,7 +100,7 @@ export default function App() {
             ),
           }}
         />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
     </NavigationContainer>
   );
 }

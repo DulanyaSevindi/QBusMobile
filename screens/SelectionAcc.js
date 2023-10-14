@@ -53,7 +53,6 @@ const SelectionAcc = ({ navigation }) => {
           }}
         >
           <Button
-            onPress={HandleSelection}
             filled
             title="Local Passenger"
             style={{
@@ -73,6 +72,7 @@ const SelectionAcc = ({ navigation }) => {
               fontWeight: "bold",
               left: 40,
             }}
+            onPress={() => navigation.navigate("TicketScreen")}
           />
         </View>
       </View>

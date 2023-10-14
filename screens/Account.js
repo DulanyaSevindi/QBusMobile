@@ -38,7 +38,7 @@ const Account = ({ navigation }) => {
           isRegistered: true,
         }
       );
-      navigation.navigate("Welcome");
+      navigation.navigate("Home");
     } catch (error) {
       console.error("Registration failed:", error);
       navigation.navigate("Login");
