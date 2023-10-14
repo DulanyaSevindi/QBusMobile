@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Signup, Welcome, SelectionAcc } from "./screens";
+import { Login, Signup, Welcome, Account, SelectionAcc } from "./screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,10 +29,16 @@ export default function App() {
             headerShown: false,
           }}
         />
-
         <Stack.Screen
           name="SelectionAcc"
           component={SelectionAcc}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Account"
+          component={Account}
           options={{
             headerShown: false,
           }}
