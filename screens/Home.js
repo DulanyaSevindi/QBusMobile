@@ -4,6 +4,7 @@ import TopupScreen from "../Navigation/TopupScreen";
 import TicketScreen from "../Navigation/TicketScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import COLORS from "../constants/colors";
 
 const Tab = createBottomTabNavigator();
 
