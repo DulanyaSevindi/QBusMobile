@@ -3,8 +3,11 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
 import Button from "../components/Button";
+import { useRoute } from "@react-navigation/native";
 
 const SelectionAcc = ({ navigation }) => {
+  const route = useRoute();
+  const id = route.params?.id;
   return (
     <LinearGradient
       style={{
@@ -57,7 +60,7 @@ const SelectionAcc = ({ navigation }) => {
               fontWeight: "bold",
               left: 40,
             }}
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("Account", { id: id })}
           />
 
           <Button

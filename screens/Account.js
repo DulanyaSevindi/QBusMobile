@@ -13,10 +13,41 @@ import COLORS from "../constants/colors";
 import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
 import { Picker } from "@react-native-picker/picker";
+import { useRoute } from "@react-navigation/native";
+import axios from "axios";
 
 const Account = ({ navigation }) => {
+  const route = useRoute();
+  const id = route.params?.id;
   const [isChecked, setIsChecked] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("Female");
+
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [gender, setGender] = useState("Male");
+  const [nic, setNic] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      const response = await axios.patch(
+        `http://192.168.1.5:4000/api/user/profile/${id}`,
+        {
+          firstname,
+          lastname,
+          gender,
+          nic,
+          isRegistered: true,
+        }
+      );
+      navigation.navigate("Welcome");
+    } catch (error) {
+      console.error("Registration failed:", error);
+      navigation.navigate("Login");
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.error);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
@@ -61,6 +92,8 @@ const Account = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={firstname}
+              onChangeText={(text) => setFirstname(text)}
             />
           </View>
         </View>
@@ -94,6 +127,8 @@ const Account = ({ navigation }) => {
               style={{
                 width: "100%",
               }}
+              value={lastname}
+              onChangeText={(text) => setLastname(text)}
             />
           </View>
         </View>
@@ -122,8 +157,10 @@ const Account = ({ navigation }) => {
                 borderColor: COLORS.black,
                 borderRadius: 5,
               }}
-              selectedValue={selectedValue}
-              onValueChange={(itemValue) => setSelectedValue(itemValue)}
+              selectedValue={gender}
+              onValueChange={(itemValue) => {
+                setGender(itemValue);
+              }}
             >
               <Picker.Item label="Female" value="Female" />
               <Picker.Item label="Male" value="Male" />
@@ -161,6 +198,8 @@ const Account = ({ navigation }) => {
               style={{
                 width: "80%",
               }}
+              value={nic}
+              onChangeText={(text) => setNic(text)}
             />
           </View>
         </View>
@@ -188,6 +227,7 @@ const Account = ({ navigation }) => {
             marginTop: 18,
             marginBottom: 4,
           }}
+          onPress={handleRegister}
         />
       </View>
     </SafeAreaView>

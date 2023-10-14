@@ -34,7 +34,7 @@ const Login = ({ navigation }) => {
         if (response.data.isRegistered === true) {
           navigation.navigate("Welcome");
         } else {
-          navigation.navigate("SelectionAcc");
+          navigation.navigate("SelectionAcc", { id: response.data.id });
         }
       } else {
         console.error(response.data.error);
