@@ -32,7 +32,7 @@ const Login = ({ navigation }) => {
       );
       if (response.status === 200) {
         if (response.data.isRegistered === true) {
-          navigation.navigate("Home");
+          navigation.navigate("Home", { id: response.data.id });
         } else {
           navigation.navigate("SelectionAcc", { id: response.data.id });
         }
