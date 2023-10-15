@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   Login,
   Signup,
@@ -13,6 +14,8 @@ import { MaterialCommunityIcons } from "react-native-vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
 
 export default function App() {
   return (
