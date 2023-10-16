@@ -19,6 +19,7 @@ export default function HomePage() {
       <Tab.Screen
         name="Home"
         component={InfoScreen}
+        initialParams={{ id }}
         options={{
           title: "Home page",
           tabBarIcon: ({ size, color }) => (

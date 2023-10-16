@@ -2,10 +2,12 @@ import { View, Text, Image, ScrollView, FlatList } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../constants/colors";
-import { Chip } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
+import QRCode from "react-native-qrcode-svg";
+import { useRoute } from "@react-navigation/native";
 
 const InfoScreen = ({ navigation }) => {
+  const route = useRoute();
+  const id = route.params?.id;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View
@@ -121,19 +123,15 @@ const InfoScreen = ({ navigation }) => {
         <Text
           style={{ fontSize: 30, right: 10, bottom: 0, fontWeight: "bold" }}
         >
-          Your Code
+          Your QR
         </Text>
-        {/* <Image
-          style={{
-            position: 'absolute',
-            top: 0, // Adjust the position of the image as needed
-            left: 0, // Adjust the position of the image as needed
-            width: '110%', // Adjust the width to zoom the image
-            height: '100%', // Adjust the height to zoom the image
-            opacity: 0.5, // Set the opacity to make the image transparent (0.5 is 50% opacity)
-          }}
-          source={require("../assets/2b2e2610449a162f03b12bea92c257fb.jpg")}
-        /> */}
+
+        <QRCode
+          value={id ? id : "NA"}
+          size={250}
+          color="black"
+          backgroundColor="white"
+        />
       </View>
 
       <View
