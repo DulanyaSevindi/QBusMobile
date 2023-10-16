@@ -74,6 +74,18 @@ const SelectionAcc = ({ navigation }) => {
             }}
             onPress={() => navigation.navigate("Home", { id: id })}
           />
+
+          <Button
+            filled
+            title="Buses & Inspectors"
+            style={{
+              marginTop: 22,
+              width: "80%",
+              fontWeight: "bold",
+              left: 40,
+            }}
+            onPress={() => navigation.navigate("BusHome")}
+          />
         </View>
       </View>
     </LinearGradient>

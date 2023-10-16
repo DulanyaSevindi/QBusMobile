@@ -4,6 +4,7 @@ import Signup from "./Signup";
 import Account from "./Account";
 import SelectionAcc from "./SelectionAcc";
 import HomePage from "./Home";
+import BusHome from "./BusHome";
 import TicketScreen from "../Navigation/TicketScreen";
 
 export {
@@ -14,4 +15,5 @@ export {
   SelectionAcc,
   HomePage,
   TicketScreen,
+  BusHome
 };
