@@ -5,5 +5,15 @@ import Account from "./Account";
 import SelectionAcc from "./SelectionAcc";
 import HomePage from "./Home";
 import BusHome from "./BusHome";
+import TicketScreen from "../Navigation/TicketScreen";
 
-export { Login, Welcome, Signup, Account, SelectionAcc, HomePage, BusHome };
+export {
+  Login,
+  Welcome,
+  Signup,
+  Account,
+  SelectionAcc,
+  HomePage,
+  TicketScreen,
+  BusHome
+};

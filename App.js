@@ -8,6 +8,7 @@ import {
   Account,
   SelectionAcc,
   HomePage,
+  TicketScreen,
   BusHome,
 } from "./screens";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
