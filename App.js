@@ -7,9 +7,9 @@ import {
   Account,
   SelectionAcc,
   HomePage,
+  BusHome,
 } from "./screens";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -60,47 +60,15 @@ export default function App() {
             headerShown: false,
           }}
         />
-      </Stack.Navigator>
 
-      {/* <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{ headerShown: false }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={InfoScreen}
+        <Stack.Screen
+          name="BusHome"
+          component={BusHome}
           options={{
-            title: "Home page",
-            tabBarIcon: ({ size, color }) => (
-              <MaterialCommunityIcons name="home" size={size} color={color} />
-            ),
+            headerShown: false,
           }}
         />
-
-        <Tab.Screen
-          name="Toup"
-          component={ToupScreen}
-          option={{
-            title: "Toup Page",
-
-            tabBarIcon: ({ size, color }) => (
-              <MaterialCommunityIcons name="Topup" size={size} color={color} />
-            ),
-          }}
-        />
-
-        <Tab.Screen
-          name="Ticket"
-          component={ToupScreen}
-          option={{
-            title: "Ticket Page",
-
-            tabBarIcon: ({ size, color }) => (
-              <MaterialCommunityIcons name="Ticket" size={size} color={color} />
-            ),
-          }}
-        />
-      </Tab.Navigator> */}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
