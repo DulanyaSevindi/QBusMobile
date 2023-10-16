@@ -29,7 +29,7 @@ const Account = ({ navigation }) => {
   const handleRegister = async () => {
     try {
       const response = await axios.patch(
-        `http://192.168.1.5:4000/api/user/profile/${id}`,
+        `http://192.168.8.101:4000/api/user/profile/${id}`,
         {
           firstname,
           lastname,

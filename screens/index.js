@@ -4,5 +4,14 @@ import Signup from "./Signup";
 import Account from "./Account";
 import SelectionAcc from "./SelectionAcc";
 import HomePage from "./Home";
+import TicketScreen from "../Navigation/TicketScreen";
 
-export { Login, Welcome, Signup, Account, SelectionAcc, HomePage };
+export {
+  Login,
+  Welcome,
+  Signup,
+  Account,
+  SelectionAcc,
+  HomePage,
+  TicketScreen,
+};
