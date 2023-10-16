@@ -1,3 +1,4 @@
+import axios from "axios";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
