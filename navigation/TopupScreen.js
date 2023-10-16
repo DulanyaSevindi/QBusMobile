@@ -1,11 +1,10 @@
-
-import { View, Text, Alert, TextInput } from "react-native";
+import axios from "axios";
+import Button from "../components/Button";
+import COLORS from "../constants/colors";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
-import Button from "../components/Button";
 import { useRoute } from "@react-navigation/native";
-import axios from "axios";
+import { View, Text, Alert, TextInput } from "react-native";
 
 export default function TopupScreen() {
   const route = useRoute();

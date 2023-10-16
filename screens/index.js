@@ -1,11 +1,11 @@
-import Login from "./Login";
-import Welcome from "./Welcome";
-import Signup from "./Signup";
 import Account from "./Account";
-import SelectionAcc from "./SelectionAcc";
-import HomePage from "./Home";
 import BusHome from "./BusHome";
+import HomePage from "./Home";
+import Login from "./Login";
+import SelectionAcc from "./SelectionAcc";
+import Signup from "./Signup";
 import TicketScreen from "../Navigation/TicketScreen";
+import Welcome from "./Welcome";
 
 export {
   Login,
@@ -15,5 +15,5 @@ export {
   SelectionAcc,
   HomePage,
   TicketScreen,
-  BusHome
+  BusHome,
 };

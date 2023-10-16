@@ -1,3 +1,10 @@
+import axios from "axios";
+import Checkbox from "expo-checkbox";
+import COLORS from "../constants/colors";
+import Button from "../components/Button";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -6,13 +13,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
-import { Ionicons } from "@expo/vector-icons";
-import Checkbox from "expo-checkbox";
-import Button from "../components/Button";
-import axios from "axios";
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);

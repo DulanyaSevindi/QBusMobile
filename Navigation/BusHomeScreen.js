@@ -1,14 +1,13 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
-// import QRCodeScanner from "../components/QRCodeScanner";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import { View, Text, StyleSheet, Button } from "react-native";
 
 const BusHomeScreen = () => {
+  const [id, setId] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [id, setId] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -75,4 +74,5 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 });
+
 export default BusHomeScreen;

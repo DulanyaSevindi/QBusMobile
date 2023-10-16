@@ -1,3 +1,10 @@
+import axios from "axios";
+import Button from "../components/Button";
+import Checkbox from "expo-checkbox";
+import COLORS from "../constants/colors";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -6,22 +13,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
-import { Ionicons } from "@expo/vector-icons";
-import Checkbox from "expo-checkbox";
-import Button from "../components/Button";
-import axios from "axios";
 
 const Signup = ({ navigation }) => {
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
     try {

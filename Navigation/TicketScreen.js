@@ -1,8 +1,7 @@
-import { View, Text, ScrollView } from "react-native";
-
+import COLORS from "../constants/colors";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
+import { View, Text, ScrollView } from "react-native";
 
 const TicketScreen = () => {
   return (

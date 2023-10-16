@@ -1,8 +1,8 @@
-import React from "react";
 import BusHomeScreen from "../Navigation/BusHomeScreen";
-import InspectorScreen from "../Navigation/InspectorScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import InspectorScreen from "../Navigation/InspectorScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
 
 const Tab = createBottomTabNavigator();
 

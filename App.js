@@ -1,6 +1,5 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Login,
   Signup,
@@ -8,15 +7,12 @@ import {
   Account,
   SelectionAcc,
   HomePage,
-  TicketScreen,
   BusHome,
 } from "./screens";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-
 
 export default function App() {
   return (

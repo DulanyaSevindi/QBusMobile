@@ -1,6 +1,6 @@
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
 import COLORS from "../constants/colors";
+import React from "react";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const Button = (props) => {
   const filledBgColor = props.color || COLORS.primary;

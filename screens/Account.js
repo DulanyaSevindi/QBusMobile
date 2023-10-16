@@ -1,3 +1,11 @@
+import axios from "axios";
+import Button from "../components/Button";
+import COLORS from "../constants/colors";
+import Checkbox from "expo-checkbox";
+import { Picker } from "@react-native-picker/picker";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRoute } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -6,15 +14,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
-
-import Checkbox from "expo-checkbox";
-import Button from "../components/Button";
-import { Picker } from "@react-native-picker/picker";
-import { useRoute } from "@react-navigation/native";
-import axios from "axios";
 
 const Account = ({ navigation }) => {
   const route = useRoute();

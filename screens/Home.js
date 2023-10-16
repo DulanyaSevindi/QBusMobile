@@ -1,9 +1,9 @@
-import React from "react";
-import InfoScreen from "../Navigation/InfoScreen";
-import TopupScreen from "../Navigation/TopupScreen";
-import TicketScreen from "../Navigation/TicketScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import InfoScreen from "../Navigation/InfoScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
+import TicketScreen from "../Navigation/TicketScreen";
+import TopupScreen from "../Navigation/TopupScreen";
 import { useRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
