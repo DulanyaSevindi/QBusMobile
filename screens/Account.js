@@ -14,7 +14,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-const apiurl = process.env.API_URL;
+import ApiManager from "../ApiManager";
 
 const Account = ({ navigation }) => {
   const route = useRoute();
@@ -27,25 +27,18 @@ const Account = ({ navigation }) => {
   const [nic, setNic] = useState("");
 
   const handleRegister = async () => {
-    if (apiurl) {
-      try {
-        const response = await axios.patch(`${apiurl}/api/user/profile/${id}`, {
-          firstname,
-          lastname,
-          gender,
-          nic,
-          isRegistered: true,
-        });
-        navigation.navigate("Home");
-      } catch (error) {
-        console.error("Registration failed:", error);
-        navigation.navigate("Login");
-        if (error.response && error.response.status === 400) {
-          console.error(error.response.data.error);
-        }
+    try {
+      const response = await ApiManager(`/api/user/profile/${id}`, {
+        method: "PATCH",
+        data: { firstname, lastname, gender, nic, isRegistered: true },
+      });
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("Registration failed:", error);
+      navigation.navigate("Login");
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.error);
       }
-    } else {
-      console.log("apiurl is undefined");
     }
   };
 

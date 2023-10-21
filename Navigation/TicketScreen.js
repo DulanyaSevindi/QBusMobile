@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
-const apiurl = process.env.API_URL;
+import ApiManager from "../ApiManager";
 
 const TicketScreen = () => {
   const route = useRoute();
@@ -13,26 +13,24 @@ const TicketScreen = () => {
   const [tickets, setTickets] = useState();
 
   useEffect(() => {
-    if (apiurl) {
-      const getTickets = async (id) => {
-        try {
-          const response = await axios.get(`${apiurl}/api/user/${id}/tickets`);
-          if (response.status === 200) {
-            setTickets(response.data);
-          } else {
-            console.error(response.data.error);
-          }
-        } catch (err) {
-          console.error("Api Failed:", err);
-          if (err.response && err.response.status === 400) {
-            console.error(err.response.data.error);
-          }
+    const getTickets = async (id) => {
+      try {
+        const response = await ApiManager(`/api/user/${id}/tickets`, {
+          method: "GET",
+        });
+        if (response.status === 200) {
+          setTickets(response.data);
+        } else {
+          console.error(response.data.error);
         }
-      };
-      getTickets(id);
-    } else {
-      console.log("apiurl is undefined");
-    }
+      } catch (err) {
+        console.error("Api Failed:", err);
+        if (err.response && err.response.status === 400) {
+          console.error(err.response.data.error);
+        }
+      }
+    };
+    getTickets(id);
   }, []);
 
   const formatDate = (dateString) => {

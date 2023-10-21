@@ -13,7 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-const apiurl = process.env.API_URL;
+import ApiManager from "../ApiManager";
 
 const Signup = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -25,23 +25,22 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    if (apiurl) {
-      try {
-        const response = await axios.post(`${apiurl}/api/user/signup`, {
+    try {
+      const response = await ApiManager(`/api/user/signup`, {
+        method: "POST",
+        data: {
           email,
           password,
           confirmpassword,
           mobile,
-        });
-        navigation.navigate("Login");
-      } catch (error) {
-        console.error("Signup failed:", error);
-        if (error.response && error.response.status === 400) {
-          console.error(error.response.data.error);
-        }
+        },
+      });
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Signup failed:", error);
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.error);
       }
-    } else {
-      console.log("apiurl is undefined");
     }
   };
 

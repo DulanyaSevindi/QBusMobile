@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Alert, TextInput } from "react-native";
-const apiurl = process.env.API_URL;
+import ApiManager from "../ApiManager";
 
 export default function TopupScreen() {
   const route = useRoute();
@@ -15,33 +15,10 @@ export default function TopupScreen() {
   const [topup, setTopup] = useState(0);
 
   useEffect(() => {
-    if (apiurl) {
-      const getBalance = async (id) => {
-        try {
-          const response = await axios.get(`${apiurl}/api/user/balance/${id}`);
-          if (response.status === 200) {
-            setBalance(response.data.balance);
-          } else {
-            console.error(response.data.error);
-          }
-        } catch (err) {
-          console.error("Api Failed:", err);
-          if (err.response && err.response.status === 400) {
-            console.error(err.response.data.error);
-          }
-        }
-      };
-      getBalance(id);
-    } else {
-      console.log("apiurl is undefined");
-    }
-  }, []);
-
-  const topupAccount = async (balance) => {
-    if (apiurl) {
+    const getBalance = async (id) => {
       try {
-        const response = await axios.patch(`${apiurl}/api/user/topup/${id}`, {
-          balance,
+        const response = await ApiManager(`/api/user/balance/${id}`, {
+          method: "GET",
         });
         if (response.status === 200) {
           setBalance(response.data.balance);
@@ -50,12 +27,32 @@ export default function TopupScreen() {
         }
       } catch (err) {
         console.error("Api Failed:", err);
-        if (err.response && err.response.status === 404) {
+        if (err.response && err.response.status === 400) {
           console.error(err.response.data.error);
         }
       }
-    } else {
-      console.log("apiurl is undefined");
+    };
+    getBalance(id);
+  }, []);
+
+  const topupAccount = async (balance) => {
+    try {
+      const response = await ApiManager(`/api/user/topup/${id}`, {
+        method: "PATCH",
+        data: {
+          balance,
+        },
+      });
+      if (response.status === 200) {
+        setBalance(response.data.balance);
+      } else {
+        console.error(response.data.error);
+      }
+    } catch (err) {
+      console.error("Api Failed:", err);
+      if (err.response && err.response.status === 404) {
+        console.error(err.response.data.error);
+      }
     }
   };
 

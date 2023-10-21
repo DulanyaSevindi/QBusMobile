@@ -4,7 +4,6 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image } from "react-native";
-const apiurl = process.env.API_URL;
 
 const InfoScreen = ({ navigation }) => {
   const route = useRoute();
