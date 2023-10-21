@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Alert, TextInput } from "react-native";
+const apiurl = process.env.API_URL;
 
 export default function TopupScreen() {
   const route = useRoute();
@@ -14,11 +15,34 @@ export default function TopupScreen() {
   const [topup, setTopup] = useState(0);
 
   useEffect(() => {
-    const getBalance = async (id) => {
+    if (apiurl) {
+      const getBalance = async (id) => {
+        try {
+          const response = await axios.get(`${apiurl}/api/user/balance/${id}`);
+          if (response.status === 200) {
+            setBalance(response.data.balance);
+          } else {
+            console.error(response.data.error);
+          }
+        } catch (err) {
+          console.error("Api Failed:", err);
+          if (err.response && err.response.status === 400) {
+            console.error(err.response.data.error);
+          }
+        }
+      };
+      getBalance(id);
+    } else {
+      console.log("apiurl is undefined");
+    }
+  }, []);
+
+  const topupAccount = async (balance) => {
+    if (apiurl) {
       try {
-        const response = await axios.get(
-          `http://192.168.1.5:4000/api/user/balance/${id}`
-        );
+        const response = await axios.patch(`${apiurl}/api/user/topup/${id}`, {
+          balance,
+        });
         if (response.status === 200) {
           setBalance(response.data.balance);
         } else {
@@ -26,32 +50,12 @@ export default function TopupScreen() {
         }
       } catch (err) {
         console.error("Api Failed:", err);
-        if (err.response && err.response.status === 400) {
+        if (err.response && err.response.status === 404) {
           console.error(err.response.data.error);
         }
       }
-    };
-    getBalance(id);
-  }, []);
-
-  const topupAccount = async (balance) => {
-    try {
-      const response = await axios.patch(
-        `http://192.168.1.5:4000/api/user/topup/${id}`,
-        {
-          balance,
-        }
-      );
-      if (response.status === 200) {
-        setBalance(response.data.balance);
-      } else {
-        console.error(response.data.error);
-      }
-    } catch (err) {
-      console.error("Api Failed:", err);
-      if (err.response && err.response.status === 404) {
-        console.error(err.response.data.error);
-      }
+    } else {
+      console.log("apiurl is undefined");
     }
   };
 

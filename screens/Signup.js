@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+const apiurl = process.env.API_URL;
 
 const Signup = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -24,22 +25,23 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    try {
-      const response = await axios.post(
-        "http://192.168.8.101:4000/api/user/signup",
-        {
+    if (apiurl) {
+      try {
+        const response = await axios.post(`${apiurl}/api/user/signup`, {
           email,
           password,
           confirmpassword,
           mobile,
+        });
+        navigation.navigate("Login");
+      } catch (error) {
+        console.error("Signup failed:", error);
+        if (error.response && error.response.status === 400) {
+          console.error(error.response.data.error);
         }
-      );
-      navigation.navigate("Login");
-    } catch (error) {
-      console.error("Signup failed:", error);
-      if (error.response && error.response.status === 400) {
-        console.error(error.response.data.error);
       }
+    } else {
+      console.log("apiurl is undefined");
     }
   };
 

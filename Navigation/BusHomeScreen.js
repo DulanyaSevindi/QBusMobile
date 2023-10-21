@@ -4,6 +4,7 @@ import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Button } from "react-native";
+const apiurl = process.env.API_URL;
 
 const BusHomeScreen = () => {
   const [id, setId] = useState("");
@@ -18,21 +19,25 @@ const BusHomeScreen = () => {
   }, []);
 
   const createTicket = async () => {
-    try {
-      const response = await axios.post("http://192.168.1.5:4000/api/ticket/", {
-        ticketPrice: 120,
-        distance: "4km",
-        routeNumber: "177",
-        pickup: "Malabe",
-        dropOff: "Kaduwela",
-        user: id,
-      });
-      alert("Sucess.");
-    } catch (error) {
-      console.error("API failed:", error);
-      if (error.response && error.response.status === 400) {
-        console.error(error.response.data.error);
+    if (apiurl) {
+      try {
+        const response = await axios.post(`${apiurl}/api/ticket/`, {
+          ticketPrice: 120,
+          distance: "4km",
+          routeNumber: "177",
+          pickup: "Malabe",
+          dropOff: "Kaduwela",
+          user: id,
+        });
+        alert("Sucess.");
+      } catch (error) {
+        console.error("API failed:", error);
+        if (error.response && error.response.status === 400) {
+          console.error(error.response.data.error);
+        }
       }
+    } else {
+      console.log("apiurl is undefined");
     }
   };
 

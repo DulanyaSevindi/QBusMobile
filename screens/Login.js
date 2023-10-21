@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+const apiurl = process.env.API_URL;
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -22,28 +23,29 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    try {
-      const response = await axios.post(
-        `http://192.168.1.5:4000/api/user/login`,
-        {
+    if (apiurl) {
+      try {
+        const response = await axios.post(`${apiurl}/api/user/login`, {
           email,
           password,
-        }
-      );
-      if (response.status === 200) {
-        if (response.data.isRegistered === true) {
-          navigation.navigate("Home", { id: response.data.id });
+        });
+        if (response.status === 200) {
+          if (response.data.isRegistered === true) {
+            navigation.navigate("Home", { id: response.data.id });
+          } else {
+            navigation.navigate("SelectionAcc", { id: response.data.id });
+          }
         } else {
-          navigation.navigate("SelectionAcc", { id: response.data.id });
+          console.error(response.data.error);
         }
-      } else {
-        console.error(response.data.error);
+      } catch (err) {
+        console.error("Login failed:", err);
+        if (err.response && err.response.status === 400) {
+          console.error(err.response.data.error);
+        }
       }
-    } catch (err) {
-      console.error("Login failed:", err);
-      if (err.response && err.response.status === 400) {
-        console.error(err.response.data.error);
-      }
+    } else {
+      console.log("apiurl is undefined");
     }
   };
 

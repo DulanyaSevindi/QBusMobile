@@ -3,6 +3,7 @@ import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Button } from "react-native";
+const apiurl = process.env.API_URL;
 
 const InspectorScreen = () => {
   const [id, setId] = useState("");
