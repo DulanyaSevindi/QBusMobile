@@ -38,7 +38,7 @@ const BusHomeScreen = () => {
 
   const handleBarCodeScanned = (data) => {
     setScanned(true);
-    setId(data);
+    setId(data.data);
     createTicket();
   };
 
