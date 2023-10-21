@@ -19,14 +19,17 @@ const BusHomeScreen = () => {
 
   const createTicket = async () => {
     try {
-      const response = await axios.post("http://192.168.1.5:4000/api/ticket/", {
-        ticketPrice: 120,
-        distance: "4km",
-        routeNumber: "177",
-        pickup: "Malabe",
-        dropOff: "Kaduwela",
-        user: id,
-      });
+      const response = await axios.post(
+        "http://192.168.1.16:4000/api/ticket/",
+        {
+          ticketPrice: 120,
+          distance: "4km",
+          routeNumber: "177",
+          pickup: "Malabe",
+          dropOff: "Kaduwela",
+          user: id,
+        }
+      );
       alert("Sucess.");
     } catch (error) {
       console.error("API failed:", error);

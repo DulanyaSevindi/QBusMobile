@@ -84,10 +84,9 @@ const InfoScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontSize: 30,
+            fontSize: 32,
             marginVertical: 20,
             fontWeight: "bold",
-            textDecorationLine: "underline",
           }}
         >
           Balance
@@ -98,6 +97,7 @@ const InfoScreen = ({ navigation }) => {
             fontWeight: "bold",
             borderWidth: 1,
             padding: 10,
+            borderRadius: 15,
           }}
         >
           Rs.1,250.40
