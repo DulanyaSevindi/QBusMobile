@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image } from "react-native";
+import ApiManager from "../ApiManager";
 
 const SelectionAcc = ({ navigation }) => {
   const route = useRoute();
