@@ -10,6 +10,28 @@ const UserDetails = ({ navigation }) => {
   const id = route.params?.id;
 
   const [tickets, setTickets] = useState();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const getUser = async (id) => {
+      try {
+        const response = await ApiManager(`/api/user/profile/${id}`, {
+          method: "GET",
+        });
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.error(response.data.error);
+        }
+      } catch (err) {
+        console.error("Api Failed:", err);
+        if (err.response) {
+          console.error(err.response.data.error);
+        }
+      }
+    };
+    getUser(id);
+  }, []);
 
   useEffect(() => {
     const getTickets = async (id) => {
@@ -76,10 +98,14 @@ const UserDetails = ({ navigation }) => {
           >
             User Details
           </Text>
-          <Text style={{ fontSize: 20, marginBottom: 10 }}>Name :</Text>
-          <Text style={{ fontSize: 20, marginBottom: 10 }}>Gender :</Text>
           <Text style={{ fontSize: 20, marginBottom: 10 }}>
-            Mobile Number :
+            Name : {user.firstname} {user.lastname}
+          </Text>
+          <Text style={{ fontSize: 20, marginBottom: 10 }}>
+            Gender : {user.gender}
+          </Text>
+          <Text style={{ fontSize: 20, marginBottom: 10 }}>
+            Mobile Number : {user.mobile}
           </Text>
         </View>
         <ScrollView
@@ -101,13 +127,13 @@ const UserDetails = ({ navigation }) => {
               }}
             >
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
-                {/* {t.pickup} - {t.dropOff} ({t.routeNumber}) */}
+                {t.pickup} - {t.dropOff} ({t.routeNumber})
               </Text>
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
-                {/* Fare : Rs.{t.ticketPrice} */}
+                Fare : Rs.{t.ticketPrice}
               </Text>
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
-                {/* {formatDate(t.createdAt)} */}
+                {formatDate(t.createdAt)}
               </Text>
             </View>
           ))}

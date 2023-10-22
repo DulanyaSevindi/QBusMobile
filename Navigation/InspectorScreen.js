@@ -3,10 +3,8 @@ import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Button } from "react-native";
-const apiurl = process.env.API_URL;
 
 const InspectorScreen = ({ navigation }) => {
-  const [id, setId] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -19,7 +17,7 @@ const InspectorScreen = ({ navigation }) => {
 
   const handleBarCodeScanned = (data) => {
     setScanned(true);
-    setId(data);
+    navigation.navigate("UserDetails", { id: data.data });
   };
 
   if (hasPermission === null) {
