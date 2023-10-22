@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import ApiManager from "../ApiManager";
 
 const Signup = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -25,15 +26,15 @@ const Signup = ({ navigation }) => {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post(
-        "http://192.168.8.101:4000/api/user/signup",
-        {
+      const response = await ApiManager(`/api/user/signup`, {
+        method: "POST",
+        data: {
           email,
           password,
           confirmpassword,
           mobile,
-        }
-      );
+        },
+      });
       navigation.navigate("Login");
     } catch (error) {
       console.error("Signup failed:", error);

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Alert, TextInput, Image } from "react-native";
+import ApiManager from "../ApiManager";
 
 export default function TopupScreen() {
   const route = useRoute();
@@ -16,9 +17,9 @@ export default function TopupScreen() {
   useEffect(() => {
     const getBalance = async (id) => {
       try {
-        const response = await axios.get(
-          `http://192.168.1.16:4000/api/user/balance/${id}`
-        );
+        const response = await ApiManager(`/api/user/balance/${id}`, {
+          method: "GET",
+        });
         if (response.status === 200) {
           setBalance(response.data.balance);
         } else {
@@ -36,12 +37,12 @@ export default function TopupScreen() {
 
   const topupAccount = async (balance) => {
     try {
-      const response = await axios.patch(
-        `http://192.168.1.16:4000/api/user/topup/${id}`,
-        {
+      const response = await ApiManager(`/api/user/topup/${id}`, {
+        method: "PATCH",
+        data: {
           balance,
-        }
-      );
+        },
+      });
       if (response.status === 200) {
         setBalance(response.data.balance);
       } else {

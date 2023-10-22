@@ -47,6 +47,7 @@ export default function HomePage() {
       <Tab.Screen
         name="Ticket"
         component={TicketScreen}
+        initialParams={{ id }}
         options={{
           title: "Ticket",
           tabBarIcon: ({ size, color }) => (

@@ -14,6 +14,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import ApiManager from "../ApiManager";
 
 const Account = ({ navigation }) => {
   const route = useRoute();
@@ -27,16 +28,10 @@ const Account = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.patch(
-        `http://192.168.8.101:4000/api/user/profile/${id}`,
-        {
-          firstname,
-          lastname,
-          gender,
-          nic,
-          isRegistered: true,
-        }
-      );
+      const response = await ApiManager(`/api/user/profile/${id}`, {
+        method: "PATCH",
+        data: { firstname, lastname, gender, nic, isRegistered: true },
+      });
       navigation.navigate("Home");
     } catch (error) {
       console.error("Registration failed:", error);

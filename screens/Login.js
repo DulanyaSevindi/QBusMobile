@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import ApiManager from "../ApiManager";
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -23,13 +24,13 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        `http://192.168.1.16:4000/api/user/login`,
-        {
+      const response = await ApiManager("/api/user/login", {
+        method: "POST",
+        data: {
           email,
           password,
-        }
-      );
+        },
+      });
       if (response.status === 200) {
         if (response.data.isRegistered === true) {
           navigation.navigate("Home", { id: response.data.id });

@@ -4,6 +4,7 @@ import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Button } from "react-native";
+import ApiManager from "../ApiManager";
 
 const BusHomeScreen = () => {
   const [id, setId] = useState("");
@@ -19,21 +20,21 @@ const BusHomeScreen = () => {
 
   const createTicket = async () => {
     try {
-      const response = await axios.post(
-        "http://192.168.1.16:4000/api/ticket/",
-        {
+      const response = await ApiManager(`/api/ticket/`, {
+        method: "POST",
+        data: {
           ticketPrice: 120,
           distance: "4km",
           routeNumber: "177",
           pickup: "Malabe",
           dropOff: "Kaduwela",
           user: id,
-        }
-      );
+        },
+      });
       alert("Sucess.");
     } catch (error) {
       console.error("API failed:", error);
-      if (error.response && error.response.status === 400) {
+      if (error.response) {
         console.error(error.response.data.error);
       }
     }
@@ -41,9 +42,14 @@ const BusHomeScreen = () => {
 
   const handleBarCodeScanned = (data) => {
     setScanned(true);
-    setId(data);
-    createTicket();
+    setId(data.data);
   };
+
+  useEffect(() => {
+    if (id !== "") {
+      createTicket();
+    }
+  }, [id]);
 
   if (hasPermission === null) {
     return <Text>Requesting camera permission</Text>;
