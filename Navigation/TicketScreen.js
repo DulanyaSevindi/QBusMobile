@@ -116,7 +116,10 @@ const TicketScreen = () => {
                 {t.pickup} - {t.dropOff} ({t.routeNumber})
               </Text>
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
-                Fare : Rs.{t.ticketPrice}
+                Fare : Rs.{t.ticketPrice}.00
+              </Text>
+              <Text style={{ fontSize: 20, marginBottom: 10 }}>
+                Distance : {t.distance}
               </Text>
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
                 {formatDate(t.createdAt)}
