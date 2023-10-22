@@ -8,6 +8,7 @@ import {
   SelectionAcc,
   HomePage,
   BusHome,
+  Payment,
 } from "./screens";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -64,6 +65,13 @@ export default function App() {
         <Stack.Screen
           name="BusHome"
           component={BusHome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Payment"
+          component={Payment}
           options={{
             headerShown: false,
           }}
