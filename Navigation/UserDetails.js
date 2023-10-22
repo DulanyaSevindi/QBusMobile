@@ -99,10 +99,11 @@ const UserDetails = ({ navigation }) => {
             User Details
           </Text>
           <Text style={{ fontSize: 20, marginBottom: 10 }}>
-            Name : {user.firstname} {user.lastname}
+            Name : {user?.firstname ? user.firstname : `Temporary Account`}{" "}
+            {user?.lastname ? user.lastname : ``}
           </Text>
           <Text style={{ fontSize: 20, marginBottom: 10 }}>
-            Gender : {user.gender}
+            Gender : {user?.gender ? user.gender : `-`}
           </Text>
           <Text style={{ fontSize: 20, marginBottom: 10 }}>
             Mobile Number : {user.mobile}
