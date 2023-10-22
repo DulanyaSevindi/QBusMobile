@@ -8,6 +8,22 @@ import { View, Text, Image } from "react-native";
 const SelectionAcc = ({ navigation }) => {
   const route = useRoute();
   const id = route.params?.id;
+
+  const handleRegister = async () => {
+    try {
+      const response = await ApiManager(`/api/user/profile/${id}`, {
+        method: "PATCH",
+        data: { isRegistered: true },
+      });
+      navigation.navigate("Home", { id: id });
+    } catch (error) {
+      console.error("Registration failed:", error);
+      navigation.navigate("Login");
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.error);
+      }
+    }
+  };
   return (
     <LinearGradient
       style={{
@@ -73,7 +89,7 @@ const SelectionAcc = ({ navigation }) => {
               fontWeight: "bold",
               left: 40,
             }}
-            onPress={() => navigation.navigate("Home", { id: id })}
+            onPress={handleRegister}
           />
 
           <Button

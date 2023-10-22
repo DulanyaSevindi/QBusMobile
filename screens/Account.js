@@ -32,7 +32,7 @@ const Account = ({ navigation }) => {
         method: "PATCH",
         data: { firstname, lastname, gender, nic, isRegistered: true },
       });
-      navigation.navigate("Home");
+      navigation.navigate("Home", { id: id });
     } catch (error) {
       console.error("Registration failed:", error);
       navigation.navigate("Login");
