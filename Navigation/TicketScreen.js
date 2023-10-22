@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ApiManager from "../ApiManager";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TicketScreen = () => {
   const route = useRoute();
@@ -12,26 +13,28 @@ const TicketScreen = () => {
 
   const [tickets, setTickets] = useState();
 
-  useEffect(() => {
-    const getTickets = async (id) => {
-      try {
-        const response = await ApiManager(`/api/user/${id}/tickets`, {
-          method: "GET",
-        });
-        if (response.status === 200) {
-          setTickets(response.data);
-        } else {
-          console.error(response.data.error);
-        }
-      } catch (err) {
-        console.error("Api Failed:", err);
-        if (err.response) {
-          console.error(err.response.data.error);
-        }
+  const getTickets = async (id) => {
+    try {
+      const response = await ApiManager(`/api/user/${id}/tickets`, {
+        method: "GET",
+      });
+      if (response.status === 200) {
+        setTickets(response.data);
+      } else {
+        console.error(response.data.error);
       }
-    };
-    getTickets(id);
-  }, []);
+    } catch (err) {
+      console.error("Api Failed:", err);
+      if (err.response) {
+        console.error(err.response.data.error);
+      }
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getTickets(id);
+    }, [id])
+  );
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
