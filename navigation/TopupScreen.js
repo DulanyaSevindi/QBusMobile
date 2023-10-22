@@ -38,27 +38,6 @@ export default function TopupScreen({ navigation }) {
     }, [id])
   );
 
-  const topupAccount = async (balance) => {
-    try {
-      const response = await ApiManager(`/api/user/topup/${id}`, {
-        method: "PATCH",
-        data: {
-          balance,
-        },
-      });
-      if (response.status === 200) {
-        setBalance(response.data.balance);
-      } else {
-        console.error(response.data.error);
-      }
-    } catch (err) {
-      console.error("Api Failed:", err);
-      if (err.response && err.response.status === 404) {
-        console.error(err.response.data.error);
-      }
-    }
-  };
-
   const confirmAlert = (amount) => {
     Alert.alert(
       "Confirmation",
@@ -66,7 +45,8 @@ export default function TopupScreen({ navigation }) {
       [
         {
           text: "Yes",
-          onPress: () => navigation.navigate("Payment"),
+          onPress: () =>
+            navigation.navigate("Payment", { id: id, amount: amount }),
         },
         {
           text: "No",

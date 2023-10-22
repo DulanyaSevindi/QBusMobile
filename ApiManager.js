@@ -1,7 +1,7 @@
 import axios from "axios";
 //const API_URL = process.env.API_URL;
 
-const BASE_URL = "http://192.168.8.102:4000";
+const BASE_URL = "http://192.168.1.6:4000";
 
 const ApiManager = axios.create({
   baseURL: BASE_URL,

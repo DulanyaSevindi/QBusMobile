@@ -3,9 +3,18 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import Button from "../components/Button";
+import { useRoute } from "@react-navigation/native";
+import ApiManager from "../ApiManager";
 
 const Payment = ({ navigation }) => {
-  const [selectedMethod, setSelectedMethod] = useState(null);
+  const route = useRoute();
+  const id = route.params?.id;
+  const amount = route.params?.amount;
+  const [payType, setSelectedMethod] = useState(null);
+  const [cardNo, setCardNo] = useState("");
+  const [expMonth, setExpMonth] = useState("");
+  const [expYear, setExpYear] = useState("");
+  const [cvv, setCVV] = useState("");
 
   const paymentMethods = [
     { id: 1, label: "Visa" },
@@ -17,6 +26,46 @@ const Payment = ({ navigation }) => {
     setSelectedMethod(methodId);
   };
 
+  const topupAccount = async (balance) => {
+    try {
+      const response = await ApiManager(`/api/user/topup/${id}`, {
+        method: "PATCH",
+        data: {
+          balance,
+        },
+      });
+      if (response.status !== 200) {
+        console.error(response.data.error);
+      }
+    } catch (err) {
+      console.error("Api Failed:", err);
+      if (err.response && err.response.status === 404) {
+        console.error(err.response.data.error);
+      }
+    }
+  };
+
+  const handlePayment = async () => {
+    try {
+      const response = await ApiManager(`/api/payment/`, {
+        method: "POST",
+        data: {
+          payType: payType,
+          cardNo: cardNo,
+          expMonth: expMonth,
+          expYear: expYear,
+          cvv: cvv,
+        },
+      });
+      topupAccount(amount);
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("Signup failed:", error);
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.error);
+      }
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View
@@ -106,7 +155,7 @@ const Payment = ({ navigation }) => {
                     alignItems: "center",
                   }}
                 >
-                  {selectedMethod === method.id && (
+                  {payType === method.id && (
                     <View
                       style={{
                         width: 16,
@@ -166,8 +215,8 @@ const Payment = ({ navigation }) => {
                   width: 250,
                   right: 10,
                 }}
-                //value={firstname}
-                //onChangeText={(text) => setFirstname(text)}
+                value={cardNo}
+                onChangeText={(text) => setCardNo(text)}
               />
             </View>
           </View>
@@ -204,8 +253,8 @@ const Payment = ({ navigation }) => {
                     width: 100,
                     right: 15,
                   }}
-                  //value={firstname}
-                  //onChangeText={(text) => setFirstname(text)}
+                  value={expMonth}
+                  onChangeText={(text) => setExpMonth(text)}
                 />
               </View>
             </View>
@@ -241,8 +290,8 @@ const Payment = ({ navigation }) => {
                     width: 100,
                     right: 15,
                   }}
-                  //value={firstname}
-                  //onChangeText={(text) => setFirstname(text)}
+                  value={expYear}
+                  onChangeText={(text) => setExpYear(text)}
                 />
               </View>
             </View>
@@ -278,8 +327,8 @@ const Payment = ({ navigation }) => {
                 style={{
                   width: 250,
                 }}
-                //value={firstname}
-                //onChangeText={(text) => setFirstname(text)}
+                value={cvv}
+                onChangeText={(text) => setCVV(text)}
               />
             </View>
           </View>
@@ -291,7 +340,7 @@ const Payment = ({ navigation }) => {
               marginBottom: 4,
               width: 279,
             }}
-            onPress={() => confirmAlert(topup)}
+            onPress={handlePayment}
           />
         </View>
       </View>
