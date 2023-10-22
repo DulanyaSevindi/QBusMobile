@@ -69,7 +69,7 @@ const BusHomeScreen = () => {
 
   const createTicket = async () => {
     try {
-      console.log(id)
+      console.log(id);
       const response = await ApiManager(`/api/ticket/`, {
         method: "POST",
         data: {
@@ -91,16 +91,49 @@ const BusHomeScreen = () => {
     }
   };
 
+  const getBalance = async (id) => {
+    try {
+      const response = await ApiManager(`/api/user/balance/${id}`, {
+        method: "GET",
+      });
+      if (response.status === 200) {
+        return response.data.balance > 500;
+      } else {
+        console.error(response.data.error);
+        return false;
+      }
+    } catch (err) {
+      console.error("Api Failed:", err);
+      if (err.response) {
+        console.error(err.response.data.error);
+      }
+      return false;
+    }
+  };
+
   const handleBarCodeScanned = (data) => {
     if (!scanCooldown) {
       setScanned(true);
       setId(data.data);
-      console.log(data.data)
-      createTicket();
+      console.log(data.data);
+      if (getBalance(data.data)) {
+        createTicket();
+      } else {
+        Alert.alert(
+          "Error",
+          `Insufficient balance. Required minimum amount of Rs. 500.00.`,
+          [
+            {
+              text: "Ok",
+              onPress: () => console.log("Insufficient balance"),
+            },
+          ]
+        );
+      }
       setScanCooldown(true);
       setTimeout(() => {
         setScanCooldown(false);
-        setScanned(false)
+        setScanned(false);
       }, 5000); // 3000ms = 3 seconds
     }
   };
@@ -129,18 +162,24 @@ const BusHomeScreen = () => {
           save="key"
           search={false}
         />
-        {selected !== null && (
-          !scanned ? (<View style={styles.container}>
-            <BarCodeScanner
-              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-              style={StyleSheet.absoluteFillObject}
-            />
-          </View>) : (<Text style={{
-            alignContent: "center",
-            justifyContent: "center"
-          }}>Please Wait...</Text>)
-          
-        )}
+        {selected !== null &&
+          (!scanned ? (
+            <View style={styles.container}>
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={StyleSheet.absoluteFillObject}
+              />
+            </View>
+          ) : (
+            <Text
+              style={{
+                alignContent: "center",
+                justifyContent: "center",
+              }}
+            >
+              Please Wait...
+            </Text>
+          ))}
       </View>
     </SafeAreaView>
   );
