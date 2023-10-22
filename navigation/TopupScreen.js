@@ -4,7 +4,7 @@ import COLORS from "../constants/colors";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
-import { View, Text, Alert, TextInput } from "react-native";
+import { View, Text, Alert, TextInput, Image } from "react-native";
 import ApiManager from "../ApiManager";
 
 export default function TopupScreen() {
@@ -78,24 +78,65 @@ export default function TopupScreen() {
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+      <View
+        style={{
+          height: "40%",
+          backgroundColor: "#3d73d4",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <Image
+          style={{
+            position: "relative",
+            bottom: -10,
+            right: 10,
+            width: "110%",
+            height: "100%",
+            opacity: 0.5,
+          }}
+          source={require("../assets/world-mapbackground-removebg-preview.png")}
+        />
+      </View>
+
       <View style={{ flex: 1, marginHorizontal: 30 }}>
         <View>
           <Text
             style={{
-              fontSize: 22,
-              fontWeight: "bold",
+              fontSize: 25,
+              fontWeight: 900,
               marginVertical: 30,
-              marginHorizontal: 50,
+              marginHorizontal: 10,
               color: COLORS.black,
             }}
           >
             Top-up Your Account
           </Text>
         </View>
-        <View style={{ marginBottom: 12 }}>
+        <View
+          style={{
+            marginBottom: 30,
+            marginTop: 20,
+            margin: 20,
+            paddingTop: 10,
+            paddingLeft: 5,
+            borderRadius: 40,
+            width: "105%",
+            height: "80%",
+            backgroundColor: "#f0f0f0",
+            alignItems: "center",
+            shadowColor: "black",
+            shadowOffset: { width: 0, height: 4 },
+
+            marginHorizontal: -10,
+          }}
+        >
           <Text
             style={{
-              fontSize: 17,
+              marginTop: 20,
+              fontSize: 20,
               fontWeight: 500,
               marginVertical: 8,
             }}
@@ -104,7 +145,7 @@ export default function TopupScreen() {
           </Text>
           <View
             style={{
-              width: "100%",
+              width: "60%",
               height: 48,
               borderColor: COLORS.black,
               borderWidth: 1,
@@ -112,6 +153,7 @@ export default function TopupScreen() {
               alignItems: "center",
               justifyContent: "center",
               paddingLeft: 22,
+              top: 10,
             }}
           >
             <Text
@@ -124,119 +166,111 @@ export default function TopupScreen() {
               {`Rs. ${balance}.00`}
             </Text>
           </View>
-        </View>
 
-        <View style={{ marginBottom: 12 }}>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 500,
-              marginVertical: 20,
-            }}
-          >
-            Quick Top-up
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Button
-            title="50.00"
-            onPress={() => confirmAlert(50)}
-            style={{
-              marginTop: 5,
-              marginRight: 10,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              height: 50,
-              width: 80,
-              borderRadius: 20,
-            }}
-          />
-          <Button
-            title="100.00"
-            onPress={() => confirmAlert(100)}
-            style={{
-              marginTop: 5,
-              marginRight: 10,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              height: 50,
-              width: 80,
-              borderRadius: 20,
-            }}
-          />
-          <Button
-            title="500.00"
-            onPress={() => confirmAlert(500)}
-            style={{
-              marginTop: 5,
-              marginRight: 10,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              height: 50,
-              width: 80,
-              borderRadius: 20,
-            }}
-          />
-          <Button
-            title="1000.00"
-            onPress={() => confirmAlert(1000)}
-            style={{
-              marginTop: 5,
-              marginRight: 10,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              height: 50,
-              width: 80,
-              borderRadius: 20,
-            }}
-          />
-        </View>
-
-        <View style={{ marginBottom: 12, marginVertical: 25 }}>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 500,
-              marginVertical: 8,
-            }}
-          >
-            Custom Top-up
-          </Text>
-
-          <View
-            style={{
-              marginVertical: 20,
-              width: "100%",
-              height: 50,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              borderRadius: 8,
-              alignItems: "center",
-              justifyContent: "center",
-              paddingLeft: 20,
-            }}
-          >
-            <TextInput
-              placeholder="Enter your amount"
-              placeholderTextColor={COLORS.black}
-              keyboardType="numeric"
+          <View style={{ marginBottom: 10 }}>
+            <Text
               style={{
-                width: "100%",
+                fontSize: 20,
+                fontWeight: 500,
+                marginVertical: 20,
+                right: 90,
+                top: 15,
               }}
-              onChangeText={(t) => setTopup(t)}
+            >
+              Quick Top-up
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Button
+              title="100.00"
+              onPress={() => confirmAlert(100)}
+              style={{
+                marginTop: 5,
+                marginRight: 10,
+                borderColor: COLORS.black,
+                borderWidth: 2,
+                height: 50,
+                width: 80,
+                borderRadius: 20,
+              }}
+            />
+            <Button
+              title="500.00"
+              onPress={() => confirmAlert(500)}
+              style={{
+                marginTop: 5,
+                marginRight: 10,
+                borderColor: COLORS.black,
+                borderWidth: 2,
+                height: 50,
+                width: 80,
+                borderRadius: 20,
+              }}
+            />
+            <Button
+              title="1000.00"
+              onPress={() => confirmAlert(1000)}
+              style={{
+                marginTop: 5,
+                marginRight: 10,
+                borderColor: COLORS.black,
+                borderWidth: 2,
+                height: 50,
+                width: 80,
+                borderRadius: 20,
+              }}
             />
           </View>
-        </View>
 
-        <Button
-          title="Proceed"
-          filled
-          style={{
-            marginTop: 18,
-            marginBottom: 4,
-          }}
-          onPress={() => confirmAlert(topup)}
-        />
+          <View style={{ marginBottom: 12, marginVertical: 25 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 500,
+                marginVertical: 8,
+                right: 5,
+              }}
+            >
+              Custom Top-up
+            </Text>
+
+            <View
+              style={{
+                marginVertical: 20,
+                width: 290,
+                height: 50,
+                borderColor: COLORS.black,
+                borderWidth: 2,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingLeft: 20,
+              }}
+            >
+              <TextInput
+                placeholder="Enter your amount"
+                placeholderTextColor={COLORS.black}
+                keyboardType="numeric"
+                style={{
+                  width: "100%",
+                  left: -1,
+                }}
+                onChangeText={(t) => setTopup(t)}
+              />
+            </View>
+          </View>
+
+          <Button
+            title="Proceed"
+            filled
+            style={{
+              marginTop: 18,
+              marginBottom: 4,
+              width: 300,
+            }}
+            onPress={() => confirmAlert(topup)}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
