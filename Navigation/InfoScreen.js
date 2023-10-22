@@ -1,13 +1,41 @@
 import COLORS from "../constants/colors";
 import QRCode from "react-native-qrcode-svg";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image } from "react-native";
+import ApiManager from "../ApiManager";
+import { useFocusEffect } from "@react-navigation/native";
 
 const InfoScreen = ({ navigation }) => {
   const route = useRoute();
   const id = route.params?.id;
+  const [balance, setBalance] = useState(0);
+
+  const getBalance = async (id) => {
+    try {
+      const response = await ApiManager(`/api/user/balance/${id}`, {
+        method: "GET",
+      });
+      if (response.status === 200) {
+        setBalance(response.data.balance);
+      } else {
+        console.error(response.data.error);
+      }
+    } catch (err) {
+      console.error("API Failed:", err);
+      if (err.response) {
+        console.error(err.response.data.error);
+      }
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getBalance(id);
+    }, [id])
+  );
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View
@@ -100,7 +128,7 @@ const InfoScreen = ({ navigation }) => {
             borderRadius: 15,
           }}
         >
-          Rs.1,250.40
+          Rs.{balance}.00
         </Text>
       </View>
 

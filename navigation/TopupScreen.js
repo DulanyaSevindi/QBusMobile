@@ -1,4 +1,3 @@
-import axios from "axios";
 import Button from "../components/Button";
 import COLORS from "../constants/colors";
 import React, { useEffect, useState } from "react";
@@ -6,34 +5,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Alert, TextInput, Image } from "react-native";
 import ApiManager from "../ApiManager";
+import { useFocusEffect } from "@react-navigation/native";
 
-export default function TopupScreen() {
+export default function TopupScreen({ navigation }) {
   const route = useRoute();
   const id = route.params?.id;
 
   const [balance, setBalance] = useState(0);
   const [topup, setTopup] = useState(0);
 
-  useEffect(() => {
-    const getBalance = async (id) => {
-      try {
-        const response = await ApiManager(`/api/user/balance/${id}`, {
-          method: "GET",
-        });
-        if (response.status === 200) {
-          setBalance(response.data.balance);
-        } else {
-          console.error(response.data.error);
-        }
-      } catch (err) {
-        console.error("Api Failed:", err);
-        if (err.response && err.response.status === 400) {
-          console.error(err.response.data.error);
-        }
+  const getBalance = async (id) => {
+    try {
+      const response = await ApiManager(`/api/user/balance/${id}`, {
+        method: "GET",
+      });
+      if (response.status === 200) {
+        setBalance(response.data.balance);
+      } else {
+        console.error(response.data.error);
       }
-    };
-    getBalance(id);
-  }, []);
+    } catch (err) {
+      console.error("Api Failed:", err);
+      if (err.response) {
+        console.error(err.response.data.error);
+      }
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getBalance(id);
+    }, [id])
+  );
 
   const topupAccount = async (balance) => {
     try {
@@ -63,9 +66,7 @@ export default function TopupScreen() {
       [
         {
           text: "Yes",
-          onPress: () => {
-            topupAccount(amount);
-          },
+          onPress: () => navigation.navigate("Payment"),
         },
         {
           text: "No",
@@ -214,6 +215,7 @@ export default function TopupScreen() {
                 marginTop: 5,
                 marginRight: 10,
                 borderColor: COLORS.black,
+
                 borderWidth: 2,
                 height: 50,
                 width: 80,
@@ -255,7 +257,14 @@ export default function TopupScreen() {
                   width: "100%",
                   left: -1,
                 }}
-                onChangeText={(t) => setTopup(t)}
+                onChangeText={(text) => {
+                  const numericValue = text.replace(/[^0-9]/g, "");
+                  if (numericValue === "" || numericValue.startsWith("-")) {
+                    setTopup("0");
+                  } else {
+                    setTopup(numericValue);
+                  }
+                }}
               />
             </View>
           </View>

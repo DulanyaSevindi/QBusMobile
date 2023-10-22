@@ -7,6 +7,7 @@ import Signup from "./Signup";
 import TicketScreen from "../Navigation/TicketScreen";
 import Welcome from "./Welcome";
 import UserDetails from "../Navigation/UserDetails";
+import Payment from "../Navigation/Payment";
 
 export {
   Login,
@@ -18,4 +19,5 @@ export {
   TicketScreen,
   BusHome,
   UserDetails,
+  Payment,
 };

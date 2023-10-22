@@ -9,6 +9,7 @@ import {
   HomePage,
   BusHome,
   UserDetails,
+  Payment,
 } from "./screens";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -72,6 +73,13 @@ export default function App() {
         <Stack.Screen
           name="UserDetails"
           component={UserDetails}
+          options={{
+            headerShown: false,
+          }}
+        />
+      <Stack.Screen
+          name="Payment"
+          component={Payment}
           options={{
             headerShown: false,
           }}
