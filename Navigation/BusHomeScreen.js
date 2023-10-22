@@ -12,6 +12,7 @@ const BusHomeScreen = () => {
   const [scanned, setScanned] = useState(false);
   const [routes, setRoutes] = useState();
   const [selected, setSelected] = useState(null);
+  const [scanCooldown, setScanCooldown] = useState(false);
 
   useEffect(() => {
     const getRoutes = async () => {
@@ -68,6 +69,7 @@ const BusHomeScreen = () => {
 
   const createTicket = async () => {
     try {
+      console.log(id)
       const response = await ApiManager(`/api/ticket/`, {
         method: "POST",
         data: {
@@ -90,15 +92,18 @@ const BusHomeScreen = () => {
   };
 
   const handleBarCodeScanned = (data) => {
-    setScanned(true);
-    setId(data.data);
-  };
-
-  useEffect(() => {
-    if (id !== "") {
+    if (!scanCooldown) {
+      setScanned(true);
+      setId(data.data);
+      console.log(data.data)
       createTicket();
+      setScanCooldown(true);
+      setTimeout(() => {
+        setScanCooldown(false);
+        setScanned(false)
+      }, 5000); // 3000ms = 3 seconds
     }
-  }, [id]);
+  };
 
   const routesSelection = routes?.map((item) => {
     return {
@@ -125,18 +130,16 @@ const BusHomeScreen = () => {
           search={false}
         />
         {selected !== null && (
-          <View style={styles.container}>
+          !scanned ? (<View style={styles.container}>
             <BarCodeScanner
               onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
               style={StyleSheet.absoluteFillObject}
             />
-            {scanned && (
-              <Button
-                title="Tap to Scan Again"
-                onPress={() => setScanned(undefined)}
-              />
-            )}
-          </View>
+          </View>) : (<Text style={{
+            alignContent: "center",
+            justifyContent: "center"
+          }}>Please Wait...</Text>)
+          
         )}
       </View>
     </SafeAreaView>
