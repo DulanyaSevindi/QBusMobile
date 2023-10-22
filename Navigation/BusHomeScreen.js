@@ -5,13 +5,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Button } from "react-native";
 import ApiManager from "../ApiManager";
 import { SelectList } from "react-native-dropdown-select-list";
+import Switch from "react-native-switch";
 
 const BusHomeScreen = () => {
   const [id, setId] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
   const [routes, setRoutes] = useState();
   const [selected, setSelected] = useState(null);
+  const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
     const getRoutes = async () => {
@@ -53,7 +54,7 @@ const BusHomeScreen = () => {
   const deductFee = async () => {
     try {
       const response = await ApiManager(`/api/user/topup/${id}`, {
-        method: "POST",
+        method: "PATCH",
         data: {
           balance: -selectedRoute.totalBusFare,
         },
@@ -73,7 +74,7 @@ const BusHomeScreen = () => {
         data: {
           ticketPrice: selectedRoute.totalBusFare,
           distance: selectedRoute.distance,
-          routeNumber: selectedRoute,
+          routeNumber: selectedRoute.routeNumber,
           pickup: selectedRoute.pickup,
           dropOff: selectedRoute.dropOff,
           user: id,
@@ -87,11 +88,6 @@ const BusHomeScreen = () => {
         console.error(error.response.data.error);
       }
     }
-  };
-
-  const handleBarCodeScanned = (data) => {
-    setScanned(true);
-    setId(data.data);
   };
 
   useEffect(() => {
@@ -108,6 +104,27 @@ const BusHomeScreen = () => {
   });
 
   const selectedRoute = routes?.find((item) => item._id === selected);
+
+  const toggleScanning = () => {
+    setScanning(!scanning);
+  };
+
+  useEffect(() => {
+    if (scanning) {
+      const scanInterval = setInterval(() => {
+        // Your barcode scanning logic here
+      }, 1000);
+
+      return () => {
+        clearInterval(scanInterval);
+      };
+    }
+  }, [scanning]);
+
+  const handleBarCodeScanned = (data) => {
+    setScanned(true);
+    setId(data.data);
+  };
 
   if (hasPermission === null) {
     return <Text>Requesting camera permission</Text>;
@@ -126,18 +143,29 @@ const BusHomeScreen = () => {
         />
         {selected !== null && (
           <View style={styles.container}>
-            <BarCodeScanner
+            {/* <BarCodeScanner
               onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
               style={StyleSheet.absoluteFillObject}
-            />
-            {scanned && (
-              <Button
-                title="Tap to Scan Again"
-                onPress={() => setScanned(false)}
+            /> */}
+            {scanning && (
+              <BarCodeScanner
+                onBarCodeScanned={handleBarCodeScanned}
+                style={StyleSheet.absoluteFillObject}
               />
             )}
           </View>
         )}
+        <View style={{ padding: 16, alignItems: "center" }}>
+          <Switch
+            value={scanning}
+            onValueChange={toggleScanning}
+            activeText={"Scanning"}
+            inActiveText={"Paused"}
+            circleSize={30}
+            barHeight={30}
+            circleBorderWidth={1}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
