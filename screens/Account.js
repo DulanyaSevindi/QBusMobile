@@ -28,11 +28,15 @@ const Account = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await ApiManager(`/api/user/profile/${id}`, {
-        method: "PATCH",
-        data: { firstname, lastname, gender, nic, isRegistered: true },
-      });
-      navigation.navigate("Home", { id: id });
+      if (firstname && lastname && gender && nic) {
+        const response = await ApiManager(`/api/user/profile/${id}`, {
+          method: "PATCH",
+          data: { firstname, lastname, gender, nic, isRegistered: true },
+        });
+        navigation.navigate("Home", { id: id });
+      } else {
+        console.error("Error: All fields must be filled.");
+      }
     } catch (error) {
       console.error("Registration failed:", error);
       navigation.navigate("Login");
