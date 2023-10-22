@@ -106,7 +106,7 @@ const UserDetails = ({ navigation }) => {
             Gender : {user?.gender ? user.gender : `-`}
           </Text>
           <Text style={{ fontSize: 20, marginBottom: 10 }}>
-            Mobile Number : {user.mobile}
+            Mobile Number : {user?.mobile}
           </Text>
         </View>
         <ScrollView
