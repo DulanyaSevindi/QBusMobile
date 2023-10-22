@@ -2,7 +2,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import ApiManager from "../ApiManager";
 import { SelectList } from "react-native-dropdown-select-list";
 
@@ -97,7 +97,21 @@ const BusHomeScreen = () => {
         method: "GET",
       });
       if (response.status === 200) {
-        return response.data.balance > 500;
+        if(response.data.balance > 500) {
+          createTicket();
+          }
+          else {
+            Alert.alert(
+              "Error",
+              `Insufficient balance. Required minimum amount of Rs. 500.00.`,
+              [
+                {
+                  text: "Ok",
+                  onPress: () => console.log("Insufficient balance"),
+                },
+              ]
+            );
+          }
       } else {
         console.error(response.data.error);
         return false;
@@ -115,21 +129,7 @@ const BusHomeScreen = () => {
     if (!scanCooldown) {
       setScanned(true);
       setId(data.data);
-      console.log(data.data);
-      if (getBalance(data.data)) {
-        createTicket();
-      } else {
-        Alert.alert(
-          "Error",
-          `Insufficient balance. Required minimum amount of Rs. 500.00.`,
-          [
-            {
-              text: "Ok",
-              onPress: () => console.log("Insufficient balance"),
-            },
-          ]
-        );
-      }
+      getBalance(data.data)
       setScanCooldown(true);
       setTimeout(() => {
         setScanCooldown(false);
