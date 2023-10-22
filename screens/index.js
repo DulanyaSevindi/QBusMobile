@@ -6,6 +6,7 @@ import SelectionAcc from "./SelectionAcc";
 import Signup from "./Signup";
 import TicketScreen from "../Navigation/TicketScreen";
 import Welcome from "./Welcome";
+import Payment from "../Navigation/Payment";
 
 export {
   Login,
@@ -16,4 +17,5 @@ export {
   HomePage,
   TicketScreen,
   BusHome,
+  Payment,
 };

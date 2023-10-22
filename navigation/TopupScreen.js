@@ -7,7 +7,7 @@ import { useRoute } from "@react-navigation/native";
 import { View, Text, Alert, TextInput, Image } from "react-native";
 import ApiManager from "../ApiManager";
 
-export default function TopupScreen() {
+export default function TopupScreen({ navigation }) {
   const route = useRoute();
   const id = route.params?.id;
 
@@ -63,9 +63,7 @@ export default function TopupScreen() {
       [
         {
           text: "Yes",
-          onPress: () => {
-            topupAccount(amount);
-          },
+          onPress: () => navigation.navigate("Payment"),
         },
         {
           text: "No",
@@ -214,6 +212,7 @@ export default function TopupScreen() {
                 marginTop: 5,
                 marginRight: 10,
                 borderColor: COLORS.black,
+
                 borderWidth: 2,
                 height: 50,
                 width: 80,
