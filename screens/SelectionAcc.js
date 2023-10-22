@@ -65,6 +65,7 @@ const SelectionAcc = ({ navigation }) => {
           />
 
           <Button
+            filled
             title="Foreign Passenger"
             style={{
               marginTop: 22,

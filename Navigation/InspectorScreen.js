@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Button } from "react-native";
 const apiurl = process.env.API_URL;
 
-const InspectorScreen = () => {
+const InspectorScreen = ({ navigation }) => {
   const [id, setId] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -31,6 +31,18 @@ const InspectorScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
+        <Button
+          filled
+          title="User Details"
+          style={{
+            top: -20,
+            marginTop: 60,
+            width: "60%",
+            fontWeight: "bold",
+            left: 40,
+          }}
+          onPress={() => navigation.navigate("UserDetails")}
+        />
         <View style={styles.container}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
