@@ -7,7 +7,7 @@ import { View, Text, Alert, TextInput, Image } from "react-native";
 import ApiManager from "../ApiManager";
 import { useFocusEffect } from "@react-navigation/native";
 
-export default function TopupScreen() {
+export default function TopupScreen({ navigation }) {
   const route = useRoute();
   const id = route.params?.id;
 
@@ -38,27 +38,6 @@ export default function TopupScreen() {
     }, [id])
   );
 
-  const topupAccount = async (balance) => {
-    try {
-      const response = await ApiManager(`/api/user/topup/${id}`, {
-        method: "PATCH",
-        data: {
-          balance,
-        },
-      });
-      if (response.status === 200) {
-        setBalance(response.data.balance);
-      } else {
-        console.error(response.data.error);
-      }
-    } catch (err) {
-      console.error("Api Failed:", err);
-      if (err.response && err.response.status === 404) {
-        console.error(err.response.data.error);
-      }
-    }
-  };
-
   const confirmAlert = (amount) => {
     Alert.alert(
       "Confirmation",
@@ -66,9 +45,8 @@ export default function TopupScreen() {
       [
         {
           text: "Yes",
-          onPress: () => {
-            topupAccount(amount);
-          },
+          onPress: () =>
+            navigation.navigate("Payment", { id: id, amount: amount }),
         },
         {
           text: "No",
@@ -217,6 +195,7 @@ export default function TopupScreen() {
                 marginTop: 5,
                 marginRight: 10,
                 borderColor: COLORS.black,
+
                 borderWidth: 2,
                 height: 50,
                 width: 80,
