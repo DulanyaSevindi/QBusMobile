@@ -34,7 +34,7 @@ const BusHomeScreen = () => {
       alert("Sucess.");
     } catch (error) {
       console.error("API failed:", error);
-      if (error.response && error.response.status === 400) {
+      if (error.response) {
         console.error(error.response.data.error);
       }
     }
@@ -43,8 +43,13 @@ const BusHomeScreen = () => {
   const handleBarCodeScanned = (data) => {
     setScanned(true);
     setId(data.data);
-    createTicket();
   };
+
+  useEffect(() => {
+    if (id !== "") {
+      createTicket();
+    }
+  }, [id]);
 
   if (hasPermission === null) {
     return <Text>Requesting camera permission</Text>;

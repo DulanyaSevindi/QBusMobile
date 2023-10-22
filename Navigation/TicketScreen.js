@@ -25,7 +25,7 @@ const TicketScreen = () => {
         }
       } catch (err) {
         console.error("Api Failed:", err);
-        if (err.response && err.response.status === 400) {
+        if (err.response) {
           console.error(err.response.data.error);
         }
       }
