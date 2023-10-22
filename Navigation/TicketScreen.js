@@ -3,7 +3,6 @@ import COLORS from "../constants/colors";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Image } from "react-native";
-import { View, Text, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import ApiManager from "../ApiManager";
 
@@ -58,7 +57,7 @@ const TicketScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View
         style={{
-          height: "30%",
+          height: "22%",
           backgroundColor: "#3d73d4",
           position: "absolute",
           top: 0,
@@ -84,7 +83,7 @@ const TicketScreen = () => {
           <Text
             style={{
               fontSize: 22,
-              fontWeight: "bold",
+              fontWeight: 800,
               marginVertical: 12,
               color: COLORS.black,
             }}
@@ -92,20 +91,24 @@ const TicketScreen = () => {
             Ticket History
           </Text>
         </View>
-        <ScrollView>
+        <ScrollView
+          style={{
+            top: 40,
+            marginBottom: 80,
+          }}
+        >
           {tickets?.map((t, key) => (
             <View
-            style={{
-              marginBottom: 25,
-              flex: 1,
-              backgroundColor: "#f0f0f0",
-              paddingTop: 10,
-              paddingHorizontal: 20,
-              borderRadius: 10,
-              elevation: 10,
-              marginTop: 80,
-            }}
-          >
+              style={{
+                marginBottom: 25,
+                flex: 1,
+                backgroundColor: "#f0f0f0",
+                paddingTop: 10,
+                paddingHorizontal: 20,
+                borderRadius: 10,
+                elevation: 10,
+              }}
+            >
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
                 {t.pickup} - {t.dropOff} ({t.routeNumber})
               </Text>
