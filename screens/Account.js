@@ -14,7 +14,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 
 const Account = ({ navigation }) => {
   const route = useRoute();
@@ -28,20 +28,34 @@ const Account = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
-      if (firstname && lastname && gender && nic) {
-        const response = await ApiManager(`/api/user/profile/${id}`, {
-          method: "PATCH",
-          data: { firstname, lastname, gender, nic, isRegistered: true },
-        });
-        navigation.navigate("Home", { id: id });
-      } else {
+      if (!firstname || !lastname || !gender || !nic) {
         console.error("Error: All fields must be filled.");
+        return;
+      }
+
+      const apiManager = new MyApiManager();
+      const response = await apiManager.instance.patch(
+        `/api/user/profile/${id}`,
+        {
+          firstname,
+          lastname,
+          gender,
+          nic,
+          isRegistered: true,
+        }
+      );
+
+      if (response.status === 200) {
+        navigation.navigate("Home", { id });
+      } else {
+        console.error("Registration failed. Unexpected response:", response);
       }
     } catch (error) {
       console.error("Registration failed:", error);
       navigation.navigate("Login");
+
       if (error.response && error.response.status === 400) {
-        console.error(error.response.data.error);
+        console.error("Server error:", error.response.data.error);
       }
     }
   };

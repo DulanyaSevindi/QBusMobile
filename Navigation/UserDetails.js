@@ -2,22 +2,21 @@ import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../constants/colors";
 import { useRoute } from "@react-navigation/native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 import React, { useEffect, useState } from "react";
-
 const UserDetails = ({ navigation }) => {
   const route = useRoute();
   const id = route.params?.id;
-
   const [tickets, setTickets] = useState();
   const [user, setUser] = useState();
+  const apiManager = MyApiManager.getInstance();
 
   useEffect(() => {
     const getUser = async (id) => {
       try {
-        const response = await ApiManager(`/api/user/profile/${id}`, {
-          method: "GET",
-        });
+        const response = await apiManager.instance.get(
+          `/api/user/profile/${id}`
+        );
         if (response.status === 200) {
           setUser(response.data);
         } else {
@@ -31,14 +30,14 @@ const UserDetails = ({ navigation }) => {
       }
     };
     getUser(id);
-  }, []);
+  }, [apiManager, id]);
 
   useEffect(() => {
     const getTickets = async (id) => {
       try {
-        const response = await ApiManager(`/api/user/${id}/tickets`, {
-          method: "GET",
-        });
+        const response = await apiManager.instance.get(
+          `/api/user/${id}/tickets`
+        );
         if (response.status === 200) {
           setTickets(response.data);
         } else {
@@ -52,7 +51,7 @@ const UserDetails = ({ navigation }) => {
       }
     };
     getTickets(id);
-  }, []);
+  }, [apiManager, id]);
 
   const formatDate = (dateString) => {
     if (!dateString) return "";

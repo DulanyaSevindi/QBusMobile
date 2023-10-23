@@ -3,7 +3,7 @@ import COLORS from "../constants/colors";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet, Alert } from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const BusHomeScreen = () => {
@@ -17,9 +17,9 @@ const BusHomeScreen = () => {
   useEffect(() => {
     const getRoutes = async () => {
       try {
-        const response = await ApiManager(`/api/route/`, {
-          method: "GET",
-        });
+        const response = await MyApiManager.getInstance().instance.get(
+          "/api/route/"
+        );
         if (response.status === 200) {
           setRoutes(
             response.data.map((c) => {
@@ -53,11 +53,8 @@ const BusHomeScreen = () => {
 
   const deductFee = async () => {
     try {
-      const response = await ApiManager(`/api/user/topup/${id}`, {
-        method: "PATCH",
-        data: {
-          balance: -selectedRoute.totalBusFare,
-        },
+      await MyApiManager.getInstance().instance.patch(`/api/user/topup/${id}`, {
+        balance: -selectedRoute.totalBusFare,
       });
     } catch (error) {
       console.error("Transaction API failed:", error);
@@ -70,18 +67,15 @@ const BusHomeScreen = () => {
   const createTicket = async () => {
     try {
       console.log(id);
-      const response = await ApiManager(`/api/ticket/`, {
-        method: "POST",
-        data: {
-          ticketPrice: selectedRoute.totalBusFare,
-          distance: selectedRoute.distance,
-          routeNumber: selectedRoute.routeNumber,
-          pickup: selectedRoute.pickup,
-          dropOff: selectedRoute.dropOff,
-          user: id,
-        },
+      await MyApiManager.getInstance().instance.post("/api/ticket/", {
+        ticketPrice: selectedRoute.totalBusFare,
+        distance: selectedRoute.distance,
+        routeNumber: selectedRoute.routeNumber,
+        pickup: selectedRoute.pickup,
+        dropOff: selectedRoute.dropOff,
+        user: id,
       });
-      alert("Sucess.");
+      alert("Success.");
       deductFee();
     } catch (error) {
       console.error("API failed:", error);
@@ -93,25 +87,24 @@ const BusHomeScreen = () => {
 
   const getBalance = async (id) => {
     try {
-      const response = await ApiManager(`/api/user/balance/${id}`, {
-        method: "GET",
-      });
+      const response = await MyApiManager.getInstance().instance.get(
+        `/api/user/balance/${id}`
+      );
       if (response.status === 200) {
-        if(response.data.balance > 500) {
+        if (response.data.balance > 500) {
           createTicket();
-          }
-          else {
-            Alert.alert(
-              "Error",
-              `Insufficient balance. Required minimum amount of Rs. 500.00.`,
-              [
-                {
-                  text: "Ok",
-                  onPress: () => console.log("Insufficient balance"),
-                },
-              ]
-            );
-          }
+        } else {
+          Alert.alert(
+            "Error",
+            "Insufficient balance. Required minimum amount of Rs. 500.00.",
+            [
+              {
+                text: "Ok",
+                onPress: () => console.log("Insufficient balance"),
+              },
+            ]
+          );
+        }
       } else {
         console.error(response.data.error);
         return false;
@@ -129,7 +122,7 @@ const BusHomeScreen = () => {
     if (!scanCooldown) {
       setScanned(true);
       setId(data.data);
-      getBalance(data.data)
+      getBalance(data.data);
       setScanCooldown(true);
       setTimeout(() => {
         setScanCooldown(false);

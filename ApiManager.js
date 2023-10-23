@@ -1,12 +1,22 @@
+// ApiManager.js
 import axios from "axios";
-//const API_URL = process.env.API_URL;
 
-const BASE_URL = "http://192.168.1.6:4000";
+class MyApiManager {
+  constructor() {
+    this.baseURL = "http://192.168.1.16:4000";
+    this.instance = axios.create({
+      baseURL: this.baseURL,
+      responseType: "json",
+      timeout: 5000,
+    });
+  }
 
-const ApiManager = axios.create({
-  baseURL: BASE_URL,
-  responseType: "json",
-  timeout: 5000,
-});
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new MyApiManager();
+    }
+    return this.instance;
+  }
+}
 
-export default ApiManager;
+export default MyApiManager;

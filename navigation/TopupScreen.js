@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Alert, TextInput, Image } from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function TopupScreen({ navigation }) {
@@ -16,9 +16,9 @@ export default function TopupScreen({ navigation }) {
 
   const getBalance = async (id) => {
     try {
-      const response = await ApiManager(`/api/user/balance/${id}`, {
-        method: "GET",
-      });
+      const apiManager = MyApiManager.getInstance();
+      const response = await apiManager.instance.get(`/api/user/balance/${id}`);
+
       if (response.status === 200) {
         setBalance(response.data.balance);
       } else {

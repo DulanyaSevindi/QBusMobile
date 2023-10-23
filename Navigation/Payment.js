@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import Button from "../components/Button";
 import { useRoute } from "@react-navigation/native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 
 const Payment = ({ navigation }) => {
   const route = useRoute();
@@ -26,14 +26,16 @@ const Payment = ({ navigation }) => {
     setSelectedMethod(methodId);
   };
 
+  const apiManager = MyApiManager.getInstance();
+
   const topupAccount = async (balance) => {
     try {
-      const response = await ApiManager(`/api/user/topup/${id}`, {
-        method: "PATCH",
-        data: {
+      const response = await apiManager.instance.patch(
+        `/api/user/topup/${id}`,
+        {
           balance,
-        },
-      });
+        }
+      );
       if (response.status !== 200) {
         console.error(response.data.error);
       }
@@ -47,15 +49,12 @@ const Payment = ({ navigation }) => {
 
   const handlePayment = async () => {
     try {
-      const response = await ApiManager(`/api/payment/`, {
-        method: "POST",
-        data: {
-          payType: payType,
-          cardNo: cardNo,
-          expMonth: expMonth,
-          expYear: expYear,
-          cvv: cvv,
-        },
+      const response = await apiManager.instance.post(`/api/payment/`, {
+        payType: payType,
+        cardNo: cardNo,
+        expMonth: expMonth,
+        expYear: expYear,
+        cvv: cvv,
       });
       topupAccount(amount);
       navigation.navigate("Home");
