@@ -4,18 +4,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image } from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 
 const SelectionAcc = ({ navigation }) => {
   const route = useRoute();
   const id = route.params?.id;
+  const apiManager = MyApiManager.getInstance();
 
   const handleRegister = async () => {
     try {
-      const response = await ApiManager(`/api/user/profile/${id}`, {
-        method: "PATCH",
-        data: { isRegistered: true },
-      });
+      const response = await apiManager.instance.patch(
+        `/api/user/profile/${id}`,
+        {
+          isRegistered: true,
+        }
+      );
       navigation.navigate("Home", { id: id });
     } catch (error) {
       console.error("Registration failed:", error);

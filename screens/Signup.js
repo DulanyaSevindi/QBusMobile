@@ -13,12 +13,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 
 const Signup = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-
   const [confirmpassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -26,16 +25,19 @@ const Signup = ({ navigation }) => {
 
   const handleSignup = async () => {
     try {
-      const response = await ApiManager(`/api/user/signup`, {
-        method: "POST",
-        data: {
-          email,
-          password,
-          confirmpassword,
-          mobile,
-        },
+      const apiManager = MyApiManager.getInstance();
+      const response = await apiManager.instance.post("/api/user/signup", {
+        email,
+        password,
+        confirmpassword,
+        mobile,
       });
-      navigation.navigate("Login");
+
+      if (response.status === 200) {
+        navigation.navigate("Login");
+      } else {
+        console.error(response.data.error);
+      }
     } catch (error) {
       console.error("Signup failed:", error);
       if (error.response && error.response.status === 400) {

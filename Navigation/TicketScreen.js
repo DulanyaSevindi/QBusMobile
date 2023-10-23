@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 import { useFocusEffect } from "@react-navigation/native";
 
 const TicketScreen = () => {
@@ -12,12 +12,11 @@ const TicketScreen = () => {
   const id = route.params?.id;
 
   const [tickets, setTickets] = useState();
+  const apiManager = MyApiManager.getInstance();
 
   const getTickets = async (id) => {
     try {
-      const response = await ApiManager(`/api/user/${id}/tickets`, {
-        method: "GET",
-      });
+      const response = await apiManager.instance.get(`/api/user/${id}/tickets`);
       if (response.status === 200) {
         setTickets(response.data);
       } else {
@@ -30,10 +29,11 @@ const TicketScreen = () => {
       }
     }
   };
+
   useFocusEffect(
     React.useCallback(() => {
       getTickets(id);
-    }, [id])
+    }, [apiManager, id])
   );
 
   const formatDate = (dateString) => {

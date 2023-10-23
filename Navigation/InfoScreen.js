@@ -4,19 +4,18 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image } from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 import { useFocusEffect } from "@react-navigation/native";
 
 const InfoScreen = ({ navigation }) => {
   const route = useRoute();
   const id = route.params?.id;
   const [balance, setBalance] = useState(0);
+  const apiManager = MyApiManager.getInstance();
 
   const getBalance = async (id) => {
     try {
-      const response = await ApiManager(`/api/user/balance/${id}`, {
-        method: "GET",
-      });
+      const response = await apiManager.instance.get(`/api/user/balance/${id}`);
       if (response.status === 200) {
         setBalance(response.data.balance);
       } else {
@@ -33,9 +32,8 @@ const InfoScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       getBalance(id);
-    }, [id])
+    }, [apiManager, id])
   );
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View

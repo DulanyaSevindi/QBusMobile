@@ -1,36 +1,33 @@
-import axios from "axios";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import Checkbox from "expo-checkbox";
 import COLORS from "../constants/colors";
 import Button from "../components/Button";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import ApiManager from "../ApiManager";
+import MyApiManager from "../ApiManager";
 
 const Login = ({ navigation }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await ApiManager("/api/user/login", {
-        method: "POST",
-        data: {
-          email,
-          password,
-        },
+      const apiManager = MyApiManager.getInstance();
+      const response = await apiManager.instance.post("/api/user/login", {
+        email,
+        password,
       });
+
       if (response.status === 200) {
         if (response.data.isRegistered === true) {
           navigation.navigate("Home", { id: response.data.id });
@@ -60,7 +57,7 @@ const Login = ({ navigation }) => {
               color: COLORS.black,
             }}
           >
-            Hi Welcome Back !
+            Hi Welcome Back!
           </Text>
         </View>
 
@@ -141,7 +138,7 @@ const Login = ({ navigation }) => {
                 right: 12,
               }}
             >
-              {isPasswordShown == true ? (
+              {isPasswordShown ? (
                 <Ionicons name="eye-off" size={24} color={COLORS.black} />
               ) : (
                 <Ionicons name="eye" size={24} color={COLORS.black} />
@@ -163,7 +160,7 @@ const Login = ({ navigation }) => {
             color={isChecked ? COLORS.primary : undefined}
           />
 
-          <Text>Remenber Me</Text>
+          <Text>Remember Me</Text>
         </View>
 
         <Button
@@ -271,7 +268,7 @@ const Login = ({ navigation }) => {
           }}
         >
           <Text style={{ fontSize: 16, color: COLORS.black }}>
-            Don't have an account ?{" "}
+            Don't have an account?{" "}
           </Text>
           <Pressable onPress={() => navigation.navigate("Signup")}>
             <Text
